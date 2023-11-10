@@ -90,4 +90,5 @@ gatttool needs to be installed and operational in linux for this application to 
 * (https://stackoverflow.com/questions/66196897/python-ble-discover-all-uuid-characteristics)
 * (https://m5.8266.de/?msel=stip_bt_dmm)
 * (https://github.com/inflex/owon-b35)
+* (https://github.com/kwasmich/ow18e)
 	
