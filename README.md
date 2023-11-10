@@ -94,5 +94,5 @@ gatttool needs to be installed and operational in linux for this application to 
 * (https://justanotherelectronicsblog.com/?p=930)
 * (https://github.com/riktw/AN9002_info)
 * (https://github.com/Shiro-Nek0/Bluetooth-DMM.py)
-* 
+  
 	
