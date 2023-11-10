@@ -91,4 +91,8 @@ gatttool needs to be installed and operational in linux for this application to 
 * (https://m5.8266.de/?msel=stip_bt_dmm)
 * (https://github.com/inflex/owon-b35)
 * (https://github.com/kwasmich/ow18e)
+* (https://justanotherelectronicsblog.com/?p=930)
+* (https://github.com/riktw/AN9002_info)
+* (https://github.com/Shiro-Nek0/Bluetooth-DMM.py)
+* 
 	
