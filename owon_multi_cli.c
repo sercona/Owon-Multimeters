@@ -52,6 +52,9 @@
 #define OWON_CM2100B_HANDLE  "0x001b"
 #define OWON_CM2100B_LENGTH  18
 
+#define OWON_OW18E_HANDLE    "0x001b"
+#define OWON_OW18E_LENGTH    18
+
 #define OWON_B35_B41_HANDLE  "0x002e"
 #define OWON_B35_B41_LENGTH  18
 
@@ -70,7 +73,7 @@ char fixed_val_buf[16];
 char help[] = " -a <address> [-l <filename>] [-d] [-q]\n"\
   "\t-h: This help\n"\
   "\t-a <address>: MAC address of the Owon meter, eg, -a 98:84:E3:CD:C0:E5\n"\
-  "\t-t [b35t|b41t|cm2100b]: Which model of meter\n"
+  "\t-t [b35t|b41t|cm2100b|ow18e]: Which model of meter\n"
   "\t-l <filename>: Log text output to a file\n"\
   "\t-d: debug enabled\n"\
   "\t-q: quiet output\n"\
@@ -164,9 +167,14 @@ int parse_parameters (struct glb *g, int argc, char **argv)
 	  if ( (!strcasecmp(argv[i], "b35t")) || (!strcasecmp(argv[i], "b41T")) ) {
 	    strcpy(owon_handle, OWON_B35_B41_HANDLE);
 	    owon_length = OWON_B35_B41_LENGTH;
+
 	  } else if (!strcasecmp(argv[i], "cm2100b")) {
 	    strcpy(owon_handle, OWON_CM2100B_HANDLE);
 	    owon_length = OWON_CM2100B_LENGTH;
+
+	  } else if (!strcasecmp(argv[i], "ow18e")) {
+	    strcpy(owon_handle, OWON_OW18E_HANDLE);
+	    owon_length = OWON_OW18E_LENGTH;
 	  }
 
 	} else {

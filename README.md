@@ -1,4 +1,4 @@
-# OWON Bluetooth Meters (B35T+, B41T+, CM2100B)
+# OWON Bluetooth Meters (B35T+, B41T+, OW18E, CM2100B)
 
 ## Linux BLE CLI Application
 OWON Mutltimeter data capture and display for Linux.
@@ -52,10 +52,10 @@ gatttool needs to be installed and operational in linux for this application to 
 # Usage
 	$ sudo ./owon_multi_cli
 
-	Usage: ./owon_multi_cli  -a <address> -t b35t|b41t|cm2100b [-l <filename>] [-d] [-q]
+	Usage: ./owon_multi_cli  -a <address> -t b35t|b41t|cm2100b|ow18e [-l <filename>] [-d] [-q]
 	-h: This help
 	-a <address>: Set the address of the cm2100b meter, eg, -a 98:84:E3:CD:C0:E5
-	-t b35t|b41t|cm2100b: Which model of meter (only list one)
+	-t b35t|b41t|cm2100b|ow18e: Which model of meter (only list one)
  	-l <filename>: Set logging and the filename for the log
 	-d: debug enabled
 	-q: quiet output
@@ -95,4 +95,3 @@ gatttool needs to be installed and operational in linux for this application to 
 * (https://github.com/riktw/AN9002_info)
 * (https://github.com/Shiro-Nek0/Bluetooth-DMM.py)
   
-	
