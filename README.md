@@ -1,9 +1,8 @@
-# OWON Bluetooth Meters (B35T+, B41T+, OW18E, CM2100B)
+# OWON Bluetooth Meters on Linux
 
-## Linux BLE CLI Application
-OWON Mutltimeter data capture and display for Linux.
+## Linux CLI Support for B35T+, B41T+, OW18E, CM2100B
 
-![meter](owon-multimeters.jpg)
+![meter](four_owon_meters.jpg)
 
 Captures, converts, displays and stores Bluetooth (BLE) output from these meters.
 
