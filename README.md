@@ -46,6 +46,29 @@ gatttool needs to be installed and operational in linux for this application to 
 
 	(by default, you'll likely have to run this under sudo because the gatttool
 	won't seem to talk to BLE devices initially without being superuser/root)
+	
+	
+	4) If you want to see the raw hex bytes (from linux cli):
+	
+	$ gatttool -b A6:C0:80:E5:84:0C -I
+	[A6:C0:80:E5:84:0C][LE]> connect
+	Attempting to connect to A6:C0:80:E5:84:0C
+	Connection successful
+	Notification handle = 0x001b value: 24 f0 04 00 00 00 
+	Notification handle = 0x001b value: 24 f0 04 00 00 00 
+	Notification handle = 0x001b value: 24 f0 04 00 00 00 
+	Notification handle = 0x001b value: 24 f0 04 00 00 00 
+	Notification handle = 0x001b value: 24 f0 04 00 00 00 
+	Notification handle = 0x001b value: 24 f0 04 00 00 00 
+	Notification handle = 0x001b value: 24 f0 04 00 00 00 
+	Notification handle = 0x001b value: 24 f0 04 00 00 00 
+	[A6:C0:80:E5:84:0C][LE]> quit
+
+	* Use your device's BLE MAC address.  
+	* The 0x001b value may be the same or it may be different for you.  
+	* If your (new) meter shows a different handle id, 
+	  you can try to edit the source code and see if the application decodes your stream.  
+	* Run the application with "-d" switch for debugging output.
 
 
 # Usage
