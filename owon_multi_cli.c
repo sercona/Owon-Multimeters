@@ -244,11 +244,26 @@ char *funct_to_string (char *fixed_val_buf, int function, int scale, int measure
     }
 
   } else if (function == MODE_AC_AMPS) {
-    strcpy(funct_s, "AC A");
+    if (scale == 2) {
+      strcpy(funct_s, "AC µA");
+    } else if (scale == 3) {
+      strcpy(funct_s, "AC mA");	  
+    } else if (scale == 4) {
+      strcpy(funct_s, "AC A");
+    } else {
+      strcpy(funct_s, "??AC A");
+    }
 
   } else if (function ==MODE_DC_AMPS ) {
-    strcpy(funct_s, "DC A");
-
+    if (scale == 2) {
+      strcpy(funct_s, "DC µA");
+    } else if (scale == 3) {
+      strcpy(funct_s, "DC mA");	  
+    } else if (scale == 4) {
+      strcpy(funct_s, "DC A");
+    } else {
+      strcpy(funct_s, "??DC A");
+    }
   } else if (function == MODE_NCV) {
     strcpy(funct_s, "NCV");
 
