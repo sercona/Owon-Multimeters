@@ -157,6 +157,20 @@ gatttool needs to be installed and operational in linux for this application to 
 	]
 
 	
+# Hint on Linux Line Buffering
+	Do you know about the 'stdbuf' command?  Try something like this, if your output is 'laggy':
+
+	$ stdbuf -o0 ./owon_multi_cli -a A6:C0:80:94:54:D9 -t cm2100b -j -d | tee cm2100b-ref-data-ohms.txt
+
+	stdbuf with '-o0' is about output buffering.  This method, when run before your main cli command,
+	will disable the internal buffering of the operating system.
+
+	Also not that for python apps, there is a different method that must be used.  Use the '-u' command
+	and run python3 (the interpreter) directly as:
+
+	$ python3 -u some_python_app.py
+
+	and that will enable more real-time stdout buffering with python.
 	
 
 	
