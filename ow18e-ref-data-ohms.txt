@@ -1,0 +1,7 @@
+{ "BLE_bytes" : "[2a, f1, 04, 00, af, 08]", "Function": "00000100", "Scale": "05", "Decimal": "02", "Measurement": "2223", "Timestamp": "1706209552.45", "Display_Value": "22.23 K Ohms" }
+{ "BLE_bytes" : "[2a, f1, 04, 00, af, 08]", "Function": "00000100", "Scale": "05", "Decimal": "02", "Measurement": "2223", "Timestamp": "1706209555.60", "Display_Value": "22.23 K Ohms" }
+{ "BLE_bytes" : "[2a, f1, 04, 00, 0c, 0e]", "Function": "00000100", "Scale": "05", "Decimal": "02", "Measurement": "3596", "Timestamp": "1706209556.22", "Display_Value": "35.96 K Ohms" }
+{ "BLE_bytes" : "[34, f1, 04, 00, 0c, 0e]", "Function": "00000100", "Scale": "06", "Decimal": "04", "Measurement": "3596", "Timestamp": "1706209556.20", "Display_Value": ".3596 M Ohms" }
+{ "BLE_bytes" : "[37, f1, 04, 00, ff, 7f]", "Function": "00000100", "Scale": "06", "Decimal": "07", "Measurement": "-32767", "Timestamp": "1706209556.23", "Display_Value": "-32767 Ohms Open" }
+{ "BLE_bytes" : "[34, f1, 04, 00, b5, 0c]", "Function": "00000100", "Scale": "06", "Decimal": "04", "Measurement": "3253", "Timestamp": "1706209556.67", "Display_Value": ".3253 M Ohms" }
+{ "BLE_bytes" : "[34, f1, 04, 00, 98, 0c]", "Function": "00000100", "Scale": "06", "Decimal": "04", "Measurement": "3224", "Timestamp": "1706209556.86", "Display_Value": ".3224 M Ohms" }

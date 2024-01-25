@@ -77,9 +77,10 @@ gatttool needs to be installed and operational in linux for this application to 
 	Usage: ./owon_multi_cli  -a <address> -t b35t|b41t|cm2100b|ow18e [-l <filename>] [-d] [-q]
 	-h: This help
 	-a <address>: Set the address of the cm2100b meter, eg, -a 98:84:E3:CD:C0:E5
-	-t b35t|b41t|cm2100b|ow18e: Which model of meter (only list one)
- 	-l <filename>: Set logging and the filename for the log
+	-t b35t|b41t|cm2100b|ow18e: Which model of meter
+ 	-l <filename>: Log text output to a file
 	-d: debug enabled
+	-j: json output
 	-q: quiet output
 
 
@@ -102,6 +103,54 @@ gatttool needs to be installed and operational in linux for this application to 
 	1699308112.21 -0.01 DC mV
 	1699308112.42 00.00 DC mV
 
+
+# Unit Testing
+	Run the application in debug and json mode and save its output to a file.
+	
+	$ sudo ./owon_multi_cli -a A6:C0:80:E5:84:0C -t ow18e -j -d > ow18e-ref-data-ohms.txt
+	{ "BLE_bytes" : "[2b, f1, 04, 00, 56, 09]", "Function": "00000100", "Scale": "05", "Decimal": "03", "Measurement": "2390", "Timestamp": "1706210330.73", "Display_Value": "2.390 K Ohms" }
+	{ "BLE_bytes" : "[2b, f1, 04, 00, 56, 09]", "Function": "00000100", "Scale": "05", "Decimal": "03", "Measurement": "2390", "Timestamp": "1706210331.23", "Display_Value": "2.390 K Ohms" }
+	{ "BLE_bytes" : "[2b, f1, 04, 00, 56, 09]", "Function": "00000100", "Scale": "05", "Decimal": "03", "Measurement": "2390", "Timestamp": "1706210331.73", "Display_Value": "2.390 K Ohms" }
+
+	
+	There is a helper python script *wrap_json_lines.py* that can take the raw json lines from the cli output and wrap them into a fully parsable json block:
+
+	$ ./wrap_json_lines.py -f ow18e-ref-data-ohms.txt  | python -mjson.tool
+	
+	[
+      {
+        "BLE_bytes": "[2a, f1, 04, 00, af, 08]",
+        "Function": "00000100",
+        "Scale": "05",
+        "Decimal": "02",
+        "Measurement": "2223",
+        "Timestamp": "1706209552.45",
+        "Display_Value": "22.23 K Ohms"
+      },
+      {
+        "BLE_bytes": "[2a, f1, 04, 00, af, 08]",
+        "Function": "00000100",
+        "Scale": "05",
+        "Decimal": "02",
+        "Measurement": "2223",
+        "Timestamp": "1706209552.97",
+        "Display_Value": "22.23 K Ohms"
+      },
+      {
+        "BLE_bytes": "[2a, f1, 04, 00, af, 08]",
+        "Function": "00000100",
+        "Scale": "05",
+        "Decimal": "02",
+        "Measurement": "2223",
+        "Timestamp": "1706209553.50",
+        "Display_Value": "22.23 K Ohms"
+      }
+	]
+
+	
+	
+
+	
 # Resources
 * (https://github.com/ludwich66/Bluetooth-DMM/wiki/Bluetooth---Analyses)
 * (https://github.com/ludwich66/Bluetooth-DMM/wiki/)

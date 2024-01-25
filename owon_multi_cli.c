@@ -583,6 +583,7 @@ int main (int argc, char **argv)
 	  printf("%s %s\n", ts, funct_s);
 	}
       } else  {
+	if (!g.debug) { printf("{ "); }  // if we are not doing a debug run, we need an open brace for proper json
 	printf("\"Timestamp\": \"%s\", \"Display_Value\": \"%s\" }\n", ts, funct_s);
       }
     }
