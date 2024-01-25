@@ -103,6 +103,15 @@ gatttool needs to be installed and operational in linux for this application to 
 	1699308112.21 -0.01 DC mV
 	1699308112.42 00.00 DC mV
 
+	Here is a run with json style output:
+ 
+	$ sudo ./owon_multi_cli -a A6:C0:80:E5:84:0C -t ow18e -j
+	{ "Timestamp": "1706211070.13", "Display_Value": "2.390 K Ohms" }
+	{ "Timestamp": "1706211070.63", "Display_Value": "2.390 K Ohms" }
+	{ "Timestamp": "1706211071.13", "Display_Value": "2.390 K Ohms" }
+	{ "Timestamp": "1706211071.65", "Display_Value": "2.390 K Ohms" }
+	{ "Timestamp": "1706211072.18", "Display_Value": "2.390 K Ohms" }
+
 
 # Unit Testing
 	Run the application in debug and json mode and save its output to a file.
