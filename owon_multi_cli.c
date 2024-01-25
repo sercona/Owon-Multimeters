@@ -1,8 +1,9 @@
 /*
  * owon_multi_cli.c
  *
- * (c) 2023 linux-works
+ * (c) 2023-2024 linux-works
  *
+ *  2024-jan-23: trimmed debug output, make it more pytest friendly
  *  2023-nov-05: modified for the CM2100B clamp-meter from another owon-b35 example
  *  2023-nov-10: added support for B35T+ and B41T+ (they are nearly identical to clamp-meter)
  */
@@ -76,6 +77,7 @@ char help[] = " -a <address> [-l <filename>] [-d] [-q]\n"\
   "\t-t [b35t|b41t|cm2100b|ow18e]: Which model of meter\n"
   "\t-l <filename>: Log text output to a file\n"\
   "\t-d: debug enabled\n"\
+  "\t-j: json output\n"\
   "\t-q: quiet output\n"\
   "\n\n\texample: owon_multi_cli -a 98:84:E3:CD:C0:E5 -t cm2100b -l meter_data.csv\n"\
   "\n";
@@ -86,6 +88,7 @@ uint8_t sigint_pressed;
 struct glb {
   uint8_t debug;
   uint8_t quiet;
+  uint8_t json;
   uint16_t flags;
   char *log_filename;
   char *output_filename;
@@ -115,6 +118,7 @@ int init (struct glb *g)
 {
   g->debug = 0;
   g->quiet = 0;
+  g->json = 0;
   g->flags = 0;
   g->output_filename = default_output;
   g->owon_multi_cli_address = NULL;
@@ -159,6 +163,7 @@ int parse_parameters (struct glb *g, int argc, char **argv)
 	  exit(1);
 	}
 	break;
+
 	
       case 't':
 	// type of meter
@@ -183,15 +188,17 @@ int parse_parameters (struct glb *g, int argc, char **argv)
 	}
 	break;
 	
-
       case  'd':
 	g->debug = 1;
+	break;
+
+      case  'j':
+	g->json = 1;
 	break;
 
       case 'q':
 	g->quiet = 1;
 	break;
-
 
       default:
 	break;
@@ -389,9 +396,9 @@ int main (int argc, char **argv)
 	   g.owon_multi_cli_address,
 	   owon_handle);
 
-  if (g.debug) {
-    printf("cmd: [%s]\n", cmd);
-  }
+  //if (g.debug) {
+  //  printf("cmd: [%s]\n", cmd);
+  //}
 
   fp = popen(cmd, "r");
   if (fp == NULL) {
@@ -443,15 +450,15 @@ int main (int argc, char **argv)
     // trim trailing newline
     cmd[strlen(cmd)-1] = '\0';
     
-    if (g.debug) {
-      fprintf(stdout, "gatttool says: [%s]", cmd);  // return string 'Notification handle = 0x001b value: 24 f0 04 00 c6 3a '
-      // for b35t: Notification handle = 0x002e value: 19 f0 04 00 27 01
-    }
+    // if (g.debug) {
+    //  fprintf(stdout, "gatttool says: [%s]", cmd);  // return string 'Notification handle = 0x001b value: 24 f0 04 00 c6 3a '
+    //   for b35t: Notification handle = 0x002e value: 19 f0 04 00 27 01
+    //}
 
 
     // this is ugly..  we search for a string in the gatttool return buffer, based on the handle
     sprintf(target_str, "%s value: ", owon_handle);
-    if (g.debug) printf("\nsearch for [%s] in [%s]\n", target_str, cmd);
+    //if (g.debug) printf("\nsearch for [%s] in [%s]\n", target_str, cmd);
 
     // try our first search string
     //    strcpy(owon_handle, OWON_CM2100B_HANDLE);
@@ -469,22 +476,25 @@ int main (int argc, char **argv)
     
     if (p) {
       p += strlen(target_str);
-      if (g.debug) printf("search found, target=[%s] len=[%d] starts at [%s]\n", target_str, (int)strlen(p), p);
+      //if (g.debug) printf("search found, target=[%s] len=[%d] starts at [%s]\n", target_str, (int)strlen(p), p);
     }
 
     
-    if (g.debug) {
-      printf("strlen value: %d\n", (int)strlen(p));
-    }
+    //if (g.debug) {
+    //  printf("strlen value: %d\n", (int)strlen(p));
+    //}
 
 
     // changed this from 43 bytes to 19 (which is what this clamp-meter uses for gatttool payload string
     if (strlen(p) != owon_length) {
-      if (g.debug) printf("strlen not correct, skipping\n");
+      //if (g.debug) printf("strlen not correct, skipping\n");
       continue;
     }
 
     
+    if (g.debug) { printf("{ \"BLE_bytes\" : \"["); }
+
+    int first_comma = 1;  // true
     while ( p && *p != '\0' && (i < 6/*14*/) ) {
       d[i] = strtol(p, &q, 16);
       if (!q) {
@@ -494,14 +504,17 @@ int main (int argc, char **argv)
       // 'd' array is the sequence of bytes
       p = q;
       if (g.debug) {
-	fprintf(stdout, "d[%d]=[%02x] ", i, d[i]);   // dump bytes
+	if (first_comma) {
+	  first_comma = 0; // clear it after first use
+	  fprintf(stdout, "%02x", d[i]);   // dump bytes
+	} else {
+	  fprintf(stdout, ", %02x", d[i]);   // dump bytes
+	}
       }
       i++;
     }
     
-    if (g.debug) {
-      printf("\n");
-    }
+    if (g.debug) { printf("]\", "); }
 
     
     //
@@ -529,8 +542,8 @@ int main (int argc, char **argv)
     
     // debug
     if (g.debug) {
-      printf("function=[%c%c%c%c%c%c%c%c], scale=[%02d], decimal=[%02d]\n", BYTE_TO_BINARY(function), scale, decimal);
-      printf("  raw measurement=[%d]\n", measurement);
+      printf("\"Function\": \"%c%c%c%c%c%c%c%c\", \"Scale\": \"%02d\", \"Decimal\": \"%02d\", ", BYTE_TO_BINARY(function), scale, decimal);
+      printf("\"Measurement\": \"%d\", ", measurement);
     }
 
     
@@ -563,10 +576,14 @@ int main (int argc, char **argv)
     
     // finally, print the value and any flags (if not in quiet-mode)
     if (!g.quiet) {
-      if (!strcmp(fixed_val_buf, INF_OPEN_S)) {
-	printf("%s %s\n", ts, funct_s);  // no value, just a 'flag'
-      } else {
-	printf("%s %s\n", ts, funct_s);
+      if (!g.json) {
+	if (!strcmp(fixed_val_buf, INF_OPEN_S)) {
+	  printf("%s %s\n", ts, funct_s);  // no value, just a 'flag'
+	} else {
+	  printf("%s %s\n", ts, funct_s);
+	}
+      } else  {
+	printf("\"Timestamp\": \"%s\", \"Display_Value\": \"%s\" }\n", ts, funct_s);
       }
     }
 
@@ -580,9 +597,9 @@ int main (int argc, char **argv)
       }
     }
 
-    if (g.debug) {
-      printf("\n");
-    }
+    //if (g.debug) {
+    //  printf("\n");
+    //}
     
   }
 
