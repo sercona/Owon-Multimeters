@@ -40,7 +40,8 @@ gatttool needs to be installed and operational in linux for this application to 
 	HCI hci0 has been reset
 
 
-	3) Run the app with the multimeter address as the first parameter, and the meter type as the second:
+	3) Run the app with the multimeter address as the first parameter, 
+ 	   and the meter type as the second:
 
 	$ sudo ./owon_multi_cli -a A6:C0:80:94:54:D9 -t cm2100b
 
@@ -122,38 +123,39 @@ gatttool needs to be installed and operational in linux for this application to 
 	{ "BLE_bytes" : "[2b, f1, 04, 00, 56, 09]", "Function": "00000100", "Scale": "05", "Decimal": "03", "Measurement": "2390", "Timestamp": "1706210331.73", "Display_Value": "2.390 K Ohms" }
 
 	
-	There is a helper python script "wrap_json_lines.py" that can take the raw json lines from the cli output and wrap them into a fully parsable json block:
+	There is a helper python script "wrap_json_lines.py" that can take the raw json lines from the 
+ 	cli output and wrap them into a fully parsable json block:
 
 	$ ./wrap_json_lines.py -f ow18e-ref-data-ohms.txt  | python -mjson.tool
 	
 	[
-      {
-        "BLE_bytes": "[2a, f1, 04, 00, af, 08]",
-        "Function": "00000100",
-        "Scale": "05",
-        "Decimal": "02",
-        "Measurement": "2223",
-        "Timestamp": "1706209552.45",
-        "Display_Value": "22.23 K Ohms"
-      },
-      {
-        "BLE_bytes": "[2a, f1, 04, 00, af, 08]",
-        "Function": "00000100",
-        "Scale": "05",
-        "Decimal": "02",
-        "Measurement": "2223",
-        "Timestamp": "1706209552.97",
-        "Display_Value": "22.23 K Ohms"
-      },
-      {
-        "BLE_bytes": "[2a, f1, 04, 00, af, 08]",
-        "Function": "00000100",
-        "Scale": "05",
-        "Decimal": "02",
-        "Measurement": "2223",
-        "Timestamp": "1706209553.50",
-        "Display_Value": "22.23 K Ohms"
-      }
+         {
+         "BLE_bytes": "[2a, f1, 04, 00, af, 08]",
+         "Function": "00000100",
+         "Scale": "05",
+         "Decimal": "02",
+         "Measurement": "2223",
+         "Timestamp": "1706209552.45",
+         "Display_Value": "22.23 K Ohms"
+         },
+         {
+         "BLE_bytes": "[2a, f1, 04, 00, af, 08]",
+         "Function": "00000100",
+         "Scale": "05",
+         "Decimal": "02",
+         "Measurement": "2223",
+         "Timestamp": "1706209552.97",
+         "Display_Value": "22.23 K Ohms"
+         },
+         {
+         "BLE_bytes": "[2a, f1, 04, 00, af, 08]",
+         "Function": "00000100",
+         "Scale": "05",
+         "Decimal": "02",
+         "Measurement": "2223",
+         "Timestamp": "1706209553.50",
+         "Display_Value": "22.23 K Ohms"
+         }
 	]
 
 	
@@ -163,10 +165,10 @@ gatttool needs to be installed and operational in linux for this application to 
 	$ stdbuf -o0 ./owon_multi_cli -a A6:C0:80:94:54:D9 -t cm2100b -j -d | tee cm2100b-ref-data-ohms.txt
 
 	stdbuf with '-o0' is about output buffering.  This method, when run before your main cli command,
-	will disable the internal buffering of the operating system.
+ 	will disable the internal buffering of the operating system.
 
 	Also not that for python apps, there is a different method that must be used.  Use the '-u' command
-	and run python3 (the interpreter) directly as:
+ 	and run python3 (the interpreter) directly as:
 
 	$ python3 -u some_python_app.py
 
