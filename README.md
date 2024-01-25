@@ -167,7 +167,7 @@ gatttool needs to be installed and operational in linux for this application to 
 	stdbuf with '-o0' is about output buffering.  This method, when run before your main cli command,
  	will disable the internal buffering of the operating system.
 
-	Also not that for python apps, there is a different method that must be used.  Use the '-u' command
+	Also, note that for python apps, there is a different method that must be used.  Use the '-u' command
  	and run python3 (the interpreter) directly as:
 
 	$ python3 -u some_python_app.py
