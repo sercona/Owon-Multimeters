@@ -113,7 +113,7 @@ gatttool needs to be installed and operational in linux for this application to 
 	{ "BLE_bytes" : "[2b, f1, 04, 00, 56, 09]", "Function": "00000100", "Scale": "05", "Decimal": "03", "Measurement": "2390", "Timestamp": "1706210331.73", "Display_Value": "2.390 K Ohms" }
 
 	
-	There is a helper python script *wrap_json_lines.py* that can take the raw json lines from the cli output and wrap them into a fully parsable json block:
+	There is a helper python script "wrap_json_lines.py" that can take the raw json lines from the cli output and wrap them into a fully parsable json block:
 
 	$ ./wrap_json_lines.py -f ow18e-ref-data-ohms.txt  | python -mjson.tool
 	
