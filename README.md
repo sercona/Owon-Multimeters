@@ -114,7 +114,9 @@ gatttool needs to be installed and operational in linux for this application to 
 	{ "Timestamp": "1706211071.65", "Display_Value": "2.390 K Ohms" }
 	{ "Timestamp": "1706211072.18", "Display_Value": "2.390 K Ohms" }
 
+
 	Run the application just once and exit.  Show examples with both json and text:
+ 
 	$ sudo ./owon_multi_cli -a A6:C0:80:94:54:D9 -t cm2100b -1
 	1706753314.87 04.95 Ohms
 	
