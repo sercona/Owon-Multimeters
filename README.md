@@ -188,17 +188,17 @@ gatttool needs to be installed and operational in linux for this application to 
 
 	
 # Resources
-* (https://github.com/ludwich66/Bluetooth-DMM/wiki/Bluetooth---Analyses)
-* (https://github.com/ludwich66/Bluetooth-DMM/wiki/)
-* (https://www.eevblog.com/forum/testgear/owon-cm2100b-is-uni-t-ut210e-inspired/msg5153328/)
-* (https://github.com/DeanCording/owonb35)
-* (https://github.com/jtcash/OwonB41T)
-* (https://rudd-o.com/linux-and-free-software/working-around-bluetooth-hci-problems-in-home-assistant)
-* (https://stackoverflow.com/questions/66196897/python-ble-discover-all-uuid-characteristics)
-* (https://m5.8266.de/?msel=stip_bt_dmm)
-* (https://github.com/inflex/owon-b35)
-* (https://github.com/kwasmich/ow18e)
-* (https://justanotherelectronicsblog.com/?p=930)
-* (https://github.com/riktw/AN9002_info)
-* (https://github.com/Shiro-Nek0/Bluetooth-DMM.py)
+* https://github.com/ludwich66/Bluetooth-DMM/wiki/Bluetooth---Analyses
+* https://github.com/ludwich66/Bluetooth-DMM/wiki/
+* https://www.eevblog.com/forum/testgear/owon-cm2100b-is-uni-t-ut210e-inspired/msg5153328/
+* https://github.com/DeanCording/owonb35
+* https://github.com/jtcash/OwonB41T
+* https://rudd-o.com/linux-and-free-software/working-around-bluetooth-hci-problems-in-home-assistant
+* https://stackoverflow.com/questions/66196897/python-ble-discover-all-uuid-characteristics
+* https://m5.8266.de/?msel=stip_bt_dmm
+* https://github.com/inflex/owon-b35
+* https://github.com/kwasmich/ow18e
+* https://justanotherelectronicsblog.com/?p=930
+* https://github.com/riktw/AN9002_info
+* https://github.com/Shiro-Nek0/Bluetooth-DMM.py
   
