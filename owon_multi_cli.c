@@ -3,6 +3,7 @@
  *
  * (c) 2023-2024 linux-works
  *
+ *  2024-jan-31: added a 'run-once' feature
  *  2024-jan-23: trimmed debug output, make it more pytest friendly
  *  2023-nov-05: modified for the CM2100B clamp-meter from another owon-b35 example
  *  2023-nov-10: added support for B35T+ and B41T+ (they are nearly identical to clamp-meter)
@@ -79,6 +80,7 @@ char help[] = " -a <address> [-l <filename>] [-d] [-q]\n"\
   "\t-d: debug enabled\n"\
   "\t-j: json output\n"\
   "\t-q: quiet output\n"\
+  "\t-1: run once (one data point) and then exit\n"\
   "\n\n\texample: owon_multi_cli -a 98:84:E3:CD:C0:E5 -t cm2100b -l meter_data.csv\n"\
   "\n";
 
@@ -89,6 +91,7 @@ struct glb {
   uint8_t debug;
   uint8_t quiet;
   uint8_t json;
+  uint8_t run_once;
   uint16_t flags;
   char *log_filename;
   char *output_filename;
@@ -119,6 +122,7 @@ int init (struct glb *g)
   g->debug = 0;
   g->quiet = 0;
   g->json = 0;
+  g->run_once = 0;
   g->flags = 0;
   g->output_filename = default_output;
   g->owon_multi_cli_address = NULL;
@@ -198,6 +202,10 @@ int parse_parameters (struct glb *g, int argc, char **argv)
 
       case 'q':
 	g->quiet = 1;
+	break;
+
+      case '1':
+	g->run_once = 1;
 	break;
 
       default:
@@ -427,7 +435,7 @@ int main (int argc, char **argv)
 
   /*
    * Keep reading, interpreting and converting data until someone
-   * presses ctrl-c or there's an error
+   * presses ctrl-c or there's an error (or if we were told to 'run once')
    */
   
   while (fgets(cmd, sizeof(cmd), fp) != NULL) {
@@ -435,15 +443,13 @@ int main (int argc, char **argv)
     uint8_t d[14];
     uint8_t i = 0;
 
-
+    // if user sent a 'kill -HUP' to us OR if the user ran us with the '-1' run once flag
     if (sigint_pressed) {
       if (fp) {
 	pclose(fp);
       }
       
-      fprintf(stdout, "Exit requested\n");
       fflush(stdout);
-      
       exit(1);
     }
 
@@ -451,7 +457,8 @@ int main (int argc, char **argv)
     cmd[strlen(cmd)-1] = '\0';
     
     // if (g.debug) {
-    //  fprintf(stdout, "gatttool says: [%s]", cmd);  // return string 'Notification handle = 0x001b value: 24 f0 04 00 c6 3a '
+    //  fprintf(stdout, "gatttool says: [%s]", cmd);
+    // return string 'Notification handle = 0x001b value: 24 f0 04 00 c6 3a '
     //   for b35t: Notification handle = 0x002e value: 19 f0 04 00 27 01
     //}
 
@@ -478,12 +485,6 @@ int main (int argc, char **argv)
       p += strlen(target_str);
       //if (g.debug) printf("search found, target=[%s] len=[%d] starts at [%s]\n", target_str, (int)strlen(p), p);
     }
-
-    
-    //if (g.debug) {
-    //  printf("strlen value: %d\n", (int)strlen(p));
-    //}
-
 
     // changed this from 43 bytes to 19 (which is what this clamp-meter uses for gatttool payload string
     if (strlen(p) != owon_length) {
@@ -537,16 +538,12 @@ int main (int argc, char **argv)
     } else {
       measurement = -1 * (reading[2] & 0x7fff);
     }
-
-
-    
+   
     // debug
     if (g.debug) {
       printf("\"Function\": \"%c%c%c%c%c%c%c%c\", \"Scale\": \"%02d\", \"Decimal\": \"%02d\", ", BYTE_TO_BINARY(function), scale, decimal);
       printf("\"Measurement\": \"%d\", ", measurement);
     }
-
-    
     
     // convert a string of numerals to 'floating point' via dot insertion
     //  copy bytes over from src to dest until we get to where the 'dot' should go
@@ -564,15 +561,12 @@ int main (int argc, char **argv)
       }
       fixed_val_buf[fv++] = tmp_val_buf[tv];
     }
-
     
     // capture the timestamp
     char *ts = timestamp();
-
     
     // get the non-number part of the measurement
     char *funct_s = funct_to_string(fixed_val_buf, function, scale, measurement);
-
     
     // finally, print the value and any flags (if not in quiet-mode)
     if (!g.quiet) {
@@ -588,7 +582,6 @@ int main (int argc, char **argv)
       }
     }
 
-    
     // log to disk (with timestamps) if -l option was given
     if (fl) {
       if (!strcmp(fixed_val_buf, INF_OPEN_S)) {
@@ -598,15 +591,16 @@ int main (int argc, char **argv)
       }
     }
 
-    //if (g.debug) {
-    //  printf("\n");
-    //}
-    
-  }
+    // if we were told to run just once, set a flag so that we exit properly at the top of our loop
+    if (g.run_once) {
+      sigint_pressed = 1; // break;
+    }
+
+  } // while fgets(...)
 
   
   if (pclose(fp)) {
-    fprintf(stdout,"Command not found, or exited with error\n");
+    //fprintf(stdout,"Command not found, or exited with error\n");
 
     if (fl) {
       fclose(fl);
