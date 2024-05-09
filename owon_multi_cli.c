@@ -411,7 +411,7 @@ int main (int argc, char **argv)
   fp = popen(cmd, "r");
   if (fp == NULL) {
     fprintf(stderr, "Error executing '%s'\n", cmd);
-    exit(0);
+    exit(1);
   } else {
     if (!g.quiet) {
       //fprintf(stderr, "Success (%s)\n", cmd);
@@ -450,7 +450,7 @@ int main (int argc, char **argv)
       }
       
       fflush(stdout);
-      exit(1);
+      exit(0);  // normal completion
     }
 
     // trim trailing newline
