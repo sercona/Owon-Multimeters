@@ -411,7 +411,7 @@ int main (int argc, char **argv)
   fp = popen(cmd, "r");
   if (fp == NULL) {
     fprintf(stderr, "Error executing '%s'\n", cmd);
-    exit(1);
+    exit(0);
   } else {
     if (!g.quiet) {
       //fprintf(stderr, "Success (%s)\n", cmd);
