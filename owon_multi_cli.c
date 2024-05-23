@@ -108,7 +108,7 @@ char *timestamp (void)
   gettimeofday(&tv, NULL);
 
   // trim to just 2 places after decimal
-  sprintf(fract_part_s, "%ld", (1000*tv.tv_usec));
+  sprintf(fract_part_s, "%02ld", (1000*tv.tv_usec));
   fract_part_s[2] = '\0';
  
   sprintf(time_str, "%ld.%s", tv.tv_sec, fract_part_s);
