@@ -2,7 +2,7 @@
 
 ## Linux CLI Support for B35T+, B41T+, OW18E, CM2100B
 
-![meter](four_owon_meters.jpg)
+![meter](images/four_owon_meters.jpg)
 
 Captures, converts, displays and stores Bluetooth (BLE) output from these meters.
 
