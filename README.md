@@ -6,6 +6,9 @@
 
 Captures, converts, displays and stores Bluetooth (BLE) output from these meters.
 
+(NOTE! Coming soon, ESP32 native version that does not need any linux host computer!)
+
+
 # Requirements
 gatttool needs to be installed and operational in linux for this application to work.
 

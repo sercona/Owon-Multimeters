@@ -404,9 +404,9 @@ int main (int argc, char **argv)
 	   g.owon_multi_cli_address,
 	   owon_handle);
 
-  //if (g.debug) {
-  //  printf("cmd: [%s]\n", cmd);
-  //}
+  if (g.debug) {
+    printf("cmd: [%s]\n", cmd);
+  }
 
   fp = popen(cmd, "r");
   if (fp == NULL) {
