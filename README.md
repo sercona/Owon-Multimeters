@@ -6,7 +6,10 @@
 
 Captures, converts, displays and stores Bluetooth (BLE) output from these meters.
 
+
 (NOTE! Coming soon, ESP32 native version that does not need any linux host computer!)
+![esp32_console_demo](images/arduino-esp32-serial-console.png)
+
 
 
 # Requirements
