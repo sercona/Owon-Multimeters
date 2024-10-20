@@ -1,6 +1,6 @@
 # ESP32 source code for simple console (serial 115200) ascii output
 
-![esp32_console_demo](images/arduino-esp32-serial-console.png)
+![esp32_console_demo](../images/arduino-esp32-serial-console.png)
 
 
 # Requirements
