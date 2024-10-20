@@ -1,4 +1,4 @@
-# OWON Bluetooth Meters on Linux
+# OWON Bluetooth Meters on Linux (and also ESP32)
 
 ## Linux CLI Support for B35T+, B41T+, OW18E, CM2100B
 
